@@ -21,7 +21,7 @@ public:
 };
 
 void BST::Insert(int data) {
-
+  // first commit
 }
 void BST::Delete(int data) {
 
