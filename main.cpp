@@ -2,38 +2,91 @@
 #include <iostream>
 using namespace std;
 
-class node {
+class Node {
 public:
   int data;
-  node *p, *l, *r;  // parent, left, right pointer
-  node(int d) {
+  Node *parent;
+  Node *left;
+  Node *right;
+  Node(int d) {
     data = d;
-    p = l = r = NULL;
-  };
+    parent = left = right = NULL;
+  }
 };
 
-class BST: public node {
+class BST {
+private:
+  Node *root;
 public:
+  BST() {
+    root = NULL;
+  }
   void Insert(int data);
-  void Delete(int data);
-  void inorderTraversal();
-  int Height();
+  void InorderTraversal(Node *node);
+  // void Delete(int data);   TODO: Implement delete function
+  int Height(Node *node);
+  void PrintBST();
 };
 
 void BST::Insert(int data) {
-  // first commit
+  Node* newNode = new Node(data);
+
+  if(root == NULL) {
+    root = newNode;
+    return;
+  }
+
+  Node* current = root;
+  Node* parent = nullptr;
+
+  // Traverse the tree to find the appropriate position for the new node
+  while(current != nullptr) {
+    parent = current;
+    if(data < current->data) {
+      current = current->left;
+    } else {  // data > current->data
+      current = current->right;
+    }
+  }
+
+  // Insert the new node based on the comparison with the parent node
+  newNode->parent = parent;
+  if(data < parent->data) {
+    parent->left = newNode;
+  } else {    // data >= parent->data
+    parent->right = newNode;
+  }
 }
-void BST::Delete(int data) {
+
+void BST::InorderTraversal(Node *node) {
+  if (node == NULL)
+    return;
+  InorderTraversal(node->left);
+  cout << node->data << " ";
+  InorderTraversal(node->right);
+}
+
+int BST::Height(Node *node) {
+  if (node == NULL)
+    return -1;
+  int leftHeight = Height(node->left);
+  int rightHeight = Height(node->right);
+  return max(leftHeight, rightHeight) + 1;
+}
+
+void BST::PrintBST() {
 
 }
-void BST::inorderTraversal() {
 
-}
-int BST::Height() {
-  int height;
-  return height;
-}
 
 int main() {
+  BST tree;
+
+  tree.Insert(5);
+  tree.Insert(3);
+  tree.Insert(7);
+  tree.Insert(2);
+  tree.Insert(4);
+
   return 0;
 }
