@@ -21,12 +21,16 @@ public:
   BST() {
     root = NULL;
   }
+  Node* getRoot();
   void Insert(int data);
   void InorderTraversal(Node *node);
   // void Delete(int data);   TODO: Implement delete function
   int Height(Node *node);
-  void PrintBST();
 };
+
+Node* BST::getRoot() {
+  return root;
+}
 
 void BST::Insert(int data) {
   Node* newNode = new Node(data);
@@ -74,11 +78,6 @@ int BST::Height(Node *node) {
   return max(leftHeight, rightHeight) + 1;
 }
 
-void BST::PrintBST() {
-
-}
-
-
 int main() {
   BST tree;
 
@@ -87,6 +86,12 @@ int main() {
   tree.Insert(7);
   tree.Insert(2);
   tree.Insert(4);
+
+  int treeHeight = tree.Height(tree.getRoot());
+  cout << "Height: " << treeHeight << endl;
+
+  cout << "Inorder Traverse: ";
+  tree.InorderTraversal(tree.getRoot());
 
   return 0;
 }
